@@ -250,7 +250,7 @@
         "Camera": {
           "dock": false,
           "top": null,
-          "bottom": -100,
+          "bottom": 10,
           "left": null,
           "right": 10
         }

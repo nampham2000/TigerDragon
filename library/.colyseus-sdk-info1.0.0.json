@@ -56,6 +56,20 @@
     },
     "C:\\Users\\Admin\\OneDrive\\Desktop\\Fix2\\Fix2\\extensions\\Colyseus Multiplayer SDK\\runtime\\colyseus.js.meta": {
       "time": 1713155720000
+    },
+    "/Users/waostudio/Desktop/Fix3/extensions/Colyseus Multiplayer SDK/runtime/colyseus.d.ts": {
+      "time": 1713753583660.8865,
+      "uuid": "b3d37852-12c5-433f-9b2f-1572b85fabda"
+    },
+    "/Users/waostudio/Desktop/Fix3/extensions/Colyseus Multiplayer SDK/runtime/colyseus.d.ts.meta": {
+      "time": 1713753583660.9792
+    },
+    "/Users/waostudio/Desktop/Fix3/extensions/Colyseus Multiplayer SDK/runtime/colyseus.js": {
+      "time": 1713753583661.3123,
+      "uuid": "b554cfc3-98f3-4c04-ac8b-fd4ca2621ffb"
+    },
+    "/Users/waostudio/Desktop/Fix3/extensions/Colyseus Multiplayer SDK/runtime/colyseus.js.meta": {
+      "time": 1713753583661.3816
     }
   },
   "missing": {}

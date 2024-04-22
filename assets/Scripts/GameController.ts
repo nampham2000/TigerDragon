@@ -17,6 +17,7 @@ import {
   Prefab,
   Button,
   CCInteger,
+  AudioSource,
 } from "cc";
 import { Chip } from "./Chip";
 import { NetworkConnect } from "./NetworkConnect";
@@ -156,6 +157,16 @@ export class GameController extends Component {
   private ValueAnim2: Node;
 
   @property({
+    type: Node,
+  })
+  private loadingPage: Node;
+
+  @property({
+    type: AudioSource,
+  })
+  private loadingAudio: AudioSource;
+
+  @property({
     type: Animation,
   })
   private CardNodeAnim: Animation;
@@ -281,6 +292,7 @@ export class GameController extends Component {
   private GameStateFight: boolean = false;
   private GameStatePayOut: boolean = false;
   private GameStateStopBet: boolean = false;
+  private checkSateCurrent: boolean = false;
 
   start() {
     this.clonePosCardL = this.CardNodeL.position.clone();
@@ -305,6 +317,7 @@ export class GameController extends Component {
     this.drawRectangleTotal(0);
     this.drawRectangleTotal(1);
     this.drawRectangleTotal(2);
+    this.AudioController.settingAudio(0);
   }
 
   update(deltaTime: number) {
@@ -332,6 +345,7 @@ export class GameController extends Component {
       this.NetworkConnect.gameState === "idle" &&
       this.GameStateIdle === false
     ) {
+      this.checkSateCurrent = true;
       this.UserName.string = this.NetworkConnect.room.sessionId;
       this.Idle();
       this.GameEnd = false;
@@ -344,7 +358,9 @@ export class GameController extends Component {
       this.CardNodeAnim.node.active = false;
       this.CardNodeL.active = true;
       this.CardNodeR.active = true;
+      this.checkSateCurrent = true;
     }
+
     if (
       this.NetworkConnect.gameState === "startBetting" &&
       this.GameStateStart === false
@@ -353,8 +369,10 @@ export class GameController extends Component {
       this.GameStateStart = true;
     }
 
-    if (this.NetworkConnect.gameState === "startBetting") {
-      this.PosBet();
+    if (this.checkSateCurrent === true) {
+      this.loadingPage.active = false;
+      this.loadingAudio.volume = 0;
+      this.AudioController.settingAudio(1);
     }
 
     if (
@@ -760,8 +778,8 @@ export class GameController extends Component {
     } else if (this.NetworkConnect.result === "dragonWin") {
       prefabType = this.Over;
     }
-    console.log("pREFABS",prefabType);
-    
+    console.log("pREFABS", prefabType);
+
     if (this.currentRowL >= this.numRows) {
       this.currentColL++;
       this.currentRowL = 0;
