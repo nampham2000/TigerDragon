@@ -3477,3 +3477,11 @@
 4-22-2024 18:13:12-debug: // ---- build task Sort some build options to settings.json ---- (2ms)
 4-22-2024 18:13:12-debug: run build task Sort some build options to settings.json success in 2 ms√, progress: 15%
 4-22-2024 18:13:12-debug: [Build Memory track]: Sort some build options to settings.json start:209.55MB, end 209.66MB, increase: 116.89KB
+4-22-2024 18:26:48-debug: refresh db internal success
+4-22-2024 18:26:48-debug: refresh db assets success
+4-22-2024 18:26:48-debug: refresh db colyseus-sdk success
+4-22-2024 18:26:48-debug: Run asset db hook engine-extends:afterRefresh ...
+4-22-2024 18:26:48-debug: Run asset db hook engine-extends:afterRefresh success!
+4-22-2024 18:26:48-debug: asset-db:refresh-all-database (98ms)
+4-22-2024 18:26:48-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+4-22-2024 18:26:48-debug: asset-db:worker-effect-data-processing (2ms)

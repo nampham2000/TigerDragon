@@ -76,6 +76,11 @@ export class NetworkConnect extends Component {
   result;
   winner;
   currentHost: any;
+  balanceUser: any;
+  TotalBalanceUser: any;
+  betDragon: any;
+  betTiger: any;
+  betTie: any;
 
   @property({
     type: AudioController,
@@ -146,15 +151,28 @@ export class NetworkConnect extends Component {
         }
       });
 
+      this.room.onMessage("balance", (message) => {
+        this.balanceUser = message.balance;
+        console.log(message);
+      });
+      setInterval(() => {
+        this.room.send("getBalance");
+      }, 1000);
       this.room.onStateChange((state) => {
         console.log("Room state changed:", state);
         console.log("onStateChange: ", state);
         console.log(state.roundState);
+
+        this.betDragon = state.totalBetDragon;
+        this.betTiger = state.totalBetTiger;
+        this.betTie = state.totalBetTie;
+
         // console.log(this.room.state);
         this.currentHost = state.currentHostId;
         console.log(this.currentHost);
 
         const players = [...state.players.values()];
+
         this.updatePlayerList(players);
         console.log("PlayerStatus", players[0].isHost);
         this.TotalUser = players.length;
@@ -176,7 +194,10 @@ export class NetworkConnect extends Component {
       node.active = false;
     });
     for (let i = 0; i < numElements && displayIndex < this.ListL.length; i++) {
-      if (playerList[i].sessionId !== this.room.sessionId &&playerList[i].sessionId!==this.currentHost) {
+      if (
+        playerList[i].sessionId !== this.room.sessionId &&
+        playerList[i].sessionId !== this.currentHost
+      ) {
         this.ListLabel[displayIndex].string = playerList[i].sessionId;
         this.ListL[displayIndex].active = true;
         displayIndex++;

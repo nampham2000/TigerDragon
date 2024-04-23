@@ -130,6 +130,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.result = void 0;
           this.winner = void 0;
           this.currentHost = void 0;
+          this.balanceUser = void 0;
+          this.TotalBalanceUser = void 0;
+          this.betDragon = void 0;
+          this.betTiger = void 0;
+          this.betTie = void 0;
 
           _initializerDefineProperty(this, "AudioController", _descriptor13, this);
 
@@ -198,10 +203,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 }
               });
 
+              _this.room.onMessage("balance", message => {
+                _this.balanceUser = message.balance;
+                console.log(message);
+              });
+
+              setInterval(() => {
+                _this.room.send("getBalance");
+              }, 1000);
+
               _this.room.onStateChange(state => {
                 console.log("Room state changed:", state);
                 console.log("onStateChange: ", state);
-                console.log(state.roundState); // console.log(this.room.state);
+                console.log(state.roundState);
+                _this.betDragon = state.totalBetDragon;
+                _this.betTiger = state.totalBetTiger;
+                _this.betTie = state.totalBetTie; // console.log(this.room.state);
 
                 _this.currentHost = state.currentHostId;
                 console.log(_this.currentHost);

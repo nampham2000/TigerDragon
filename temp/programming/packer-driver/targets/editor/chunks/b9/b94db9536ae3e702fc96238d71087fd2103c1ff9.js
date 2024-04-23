@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, Label, Node, tween, Vec3, Animation, SpriteFrame, Sprite, Graphics, Color, instantiate, Prefab, Button, AudioSource, Chip, NetworkConnect, AudioController, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _dec48, _dec49, _dec50, _dec51, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _descriptor38, _descriptor39, _descriptor40, _descriptor41, _descriptor42, _descriptor43, _descriptor44, _descriptor45, _descriptor46, _descriptor47, _descriptor48, _descriptor49, _descriptor50, _crd, ccclass, property, GameController;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, Label, Node, tween, Vec3, Animation, SpriteFrame, Sprite, Graphics, Color, instantiate, Prefab, Button, AudioSource, Chip, NetworkConnect, AudioController, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _dec48, _dec49, _dec50, _dec51, _dec52, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _descriptor38, _descriptor39, _descriptor40, _descriptor41, _descriptor42, _descriptor43, _descriptor44, _descriptor45, _descriptor46, _descriptor47, _descriptor48, _descriptor49, _descriptor50, _descriptor51, _crd, ccclass, property, GameController;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -147,12 +147,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       }), _dec47 = property({
         type: Label
       }), _dec48 = property({
-        type: SpriteFrame
+        type: Label
       }), _dec49 = property({
+        type: SpriteFrame
+      }), _dec50 = property({
         type: [Button]
-      }), _dec50 = property(_crd && NetworkConnect === void 0 ? (_reportPossibleCrUseOfNetworkConnect({
+      }), _dec51 = property(_crd && NetworkConnect === void 0 ? (_reportPossibleCrUseOfNetworkConnect({
         error: Error()
-      }), NetworkConnect) : NetworkConnect), _dec51 = property({
+      }), NetworkConnect) : NetworkConnect), _dec52 = property({
         type: _crd && AudioController === void 0 ? (_reportPossibleCrUseOfAudioController({
           error: Error()
         }), AudioController) : AudioController
@@ -253,13 +255,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "BalanceList", _descriptor46, this);
 
-          _initializerDefineProperty(this, "PayUserSprite", _descriptor47, this);
+          _initializerDefineProperty(this, "TotalBetLB", _descriptor47, this);
 
-          _initializerDefineProperty(this, "listCancelBet", _descriptor48, this);
+          _initializerDefineProperty(this, "PayUserSprite", _descriptor48, this);
 
-          _initializerDefineProperty(this, "NetworkConnect", _descriptor49, this);
+          _initializerDefineProperty(this, "listCancelBet", _descriptor49, this);
 
-          _initializerDefineProperty(this, "AudioController", _descriptor50, this);
+          _initializerDefineProperty(this, "NetworkConnect", _descriptor50, this);
+
+          _initializerDefineProperty(this, "AudioController", _descriptor51, this);
 
           this.UserBetTigerIcon = 0;
           this.UserBetDragonIcon = 0;
@@ -291,6 +295,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.GameStatePayOut = false;
           this.GameStateStopBet = false;
           this.checkSateCurrent = false;
+          this.log3 = void 0;
         }
 
         start() {
@@ -319,6 +324,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         update(deltaTime) {
+          // this.BalancerLb.string = this.NetworkConnect.TotalBalanceUser;
+          // console.log(this.NetworkConnect.TotalBalanceUser);
+          // this.NetworkConnect.room.balance
+          this.BalancerLb.string = this.NetworkConnect.balanceUser;
+          this.TotalBetLB[0] = this.NetworkConnect.betTiger.toString();
+          this.TotalBetLB[1] = this.NetworkConnect.betDragon.toString();
+          this.TotalBetLB[2] = this.NetworkConnect.betTie.toString();
+
           if (this.NetworkConnect.room && this.NetworkConnect.room.sessionId !== undefined) {
             this.UserName.string = this.NetworkConnect.room.sessionId;
           }
@@ -406,46 +419,66 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         betTigerBtn() {
           if (this.balanceUser >= this.chipNode.UserBet && this.GameEnd === false) {
-            this.addScore(this.chipNode.UserBet, this.betTigerLb, this.UserBetTigerIcon);
+            // this.addScore(
+            //   this.chipNode.UserBet,
+            //   this.betTigerLb,
+            //   this.UserBetTigerIcon
+            // );
             this.UserBetTigerIcon += this.chipNode.UserBet;
             this.ToatalUser[2].active = true;
-            this.NetworkConnect.room.send("Bet", JSON.stringify({
-              betAmount: this.chipNode.UserBet,
-              betType: "Tiger"
-            }));
+
+            if (this.chipNode.UserBet !== 0) {
+              this.NetworkConnect.room.send("Bet", JSON.stringify({
+                betAmount: this.chipNode.UserBet,
+                betType: "Tiger"
+              }));
+              this.createSpriteNode(-406, 200, this.ValueAnim);
+            }
+
             this.listCancelBet[1].node.active = true;
-            this.createSpriteNode(-406, 200, this.ValueAnim);
             this.AudioController.onAudio(8);
           }
         }
 
         betDragonBtn() {
           if (this.balanceUser >= this.chipNode.UserBet && this.GameEnd === false) {
-            this.addScore(this.chipNode.UserBet, this.betDragonLb, this.UserBetDragonIcon);
+            // this.addScore(
+            //   this.chipNode.UserBet,
+            //   this.betDragonLb,
+            //   this.UserBetDragonIcon
+            // );
             this.UserBetDragonIcon += this.chipNode.UserBet;
             this.ToatalUser[0].active = true;
             this.listCancelBet[3].node.active = true;
-            this.NetworkConnect.room.send("Bet", JSON.stringify({
-              betAmount: this.chipNode.UserBet,
-              betType: "Dragon"
-            }));
+
+            if (this.chipNode.UserBet !== 0) {
+              this.NetworkConnect.room.send("Bet", JSON.stringify({
+                betAmount: this.chipNode.UserBet,
+                betType: "Dragon"
+              }));
+              this.createSpriteNode(-951, 193, this.ValueAnim1);
+            }
+
             this.PosBet();
-            this.createSpriteNode(-951, 193, this.ValueAnim1);
             this.AudioController.onAudio(8);
           }
         }
 
         betTieBtn() {
           if (this.balanceUser >= this.chipNode.UserBet && this.GameEnd === false) {
-            this.addScore(this.chipNode.UserBet, this.betTieLb, this.UserBetTieIcon);
+            // this.addScore(this.chipNode.UserBet, this.betTieLb, this.UserBetTieIcon);
             this.listCancelBet[2].node.active = true;
-            this.NetworkConnect.room.send("Bet", JSON.stringify({
-              betAmount: this.chipNode.UserBet,
-              betType: "Tie"
-            }));
+
+            if (this.chipNode.UserBet !== 0) {
+              this.NetworkConnect.room.send("Bet", JSON.stringify({
+                betAmount: this.chipNode.UserBet,
+                betType: "Tie"
+              }));
+              this.createSpriteNode(-670, 221, this.ValueAnim2);
+            }
+
             this.UserBetTieIcon += this.chipNode.UserBet;
             this.ToatalUser[1].active = true;
-            this.createSpriteNode(-670, 221, this.ValueAnim2);
             this.AudioController.onAudio(8);
           }
         }
@@ -616,20 +649,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           graphics.stroke();
         }
 
-        createSpriteNode(posX, PosY, PosNode) {
-          // Tạo một Node mới
-          const spriteNode = new Node("SpriteNode");
-          spriteNode.scale = new Vec3(0.5, 0.5); // Thêm một component Sprite vào Node
+        createSpriteNode(posX, posY, posNode) {
+          // Kiểm tra xem chipNode và buttonPub đã được xác định chưa
+          if (this.chipNode && this.chipNode.buttonPub) {
+            const buttonNode = this.chipNode.buttonPub.node; // Kiểm tra xem buttonNode và spriteFrame có tồn tại không
 
-          const spriteComponent = spriteNode.addComponent(Sprite); // Gán SpriteFrame cho component Sprite
+            if (buttonNode && buttonNode.getComponent(Sprite)) {
+              const buttonSpriteFrame = buttonNode.getComponent(Sprite).spriteFrame;
+              const spriteNode = new Node("SpriteNode");
+              spriteNode.scale = new Vec3(0.5, 0.5);
+              const spriteComponent = spriteNode.addComponent(Sprite);
+              spriteComponent.spriteFrame = buttonSpriteFrame;
+              posNode.addChild(spriteNode); // Bắt đầu tween animation sau khi spriteNode đã được thêm vào posNode
 
-          spriteComponent.spriteFrame = this.chipNode.buttonPub.node.getComponent(Sprite).spriteFrame; // spriteNode.position=new Vec3(this.chipNode.buttonPub.node.position)
-          // Thêm Node vào Scene hiện tại (ví dụ: Node cha của tất cả Sprite)
-
-          PosNode.addChild(spriteNode);
-          tween(spriteNode).to(0.3, {
-            position: new Vec3(posX, PosY)
-          }).start();
+              tween(spriteNode).to(0.3, {
+                position: new Vec3(posX, posY)
+              }).start();
+            } else {
+              console.error("Button node or sprite frame is undefined");
+            }
+          } else {
+            return;
+          }
         }
 
         drawGrid(Grid) {
@@ -1222,26 +1263,33 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return [];
         }
-      }), _descriptor47 = _applyDecoratedDescriptor(_class2.prototype, "PayUserSprite", [_dec48], {
+      }), _descriptor47 = _applyDecoratedDescriptor(_class2.prototype, "TotalBetLB", [_dec48], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return [];
         }
-      }), _descriptor48 = _applyDecoratedDescriptor(_class2.prototype, "listCancelBet", [_dec49], {
+      }), _descriptor48 = _applyDecoratedDescriptor(_class2.prototype, "PayUserSprite", [_dec49], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return [];
         }
-      }), _descriptor49 = _applyDecoratedDescriptor(_class2.prototype, "NetworkConnect", [_dec50], {
+      }), _descriptor49 = _applyDecoratedDescriptor(_class2.prototype, "listCancelBet", [_dec50], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return [];
+        }
+      }), _descriptor50 = _applyDecoratedDescriptor(_class2.prototype, "NetworkConnect", [_dec51], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor50 = _applyDecoratedDescriptor(_class2.prototype, "AudioController", [_dec51], {
+      }), _descriptor51 = _applyDecoratedDescriptor(_class2.prototype, "AudioController", [_dec52], {
         configurable: true,
         enumerable: true,
         writable: true,

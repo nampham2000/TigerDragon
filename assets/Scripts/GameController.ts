@@ -248,6 +248,11 @@ export class GameController extends Component {
   private BalanceList: Label[] = [];
 
   @property({
+    type: Label,
+  })
+  private TotalBetLB: Label[] = [];
+
+  @property({
     type: SpriteFrame,
   })
   private PayUserSprite: SpriteFrame[] = [];
@@ -293,7 +298,7 @@ export class GameController extends Component {
   private GameStatePayOut: boolean = false;
   private GameStateStopBet: boolean = false;
   private checkSateCurrent: boolean = false;
-
+  log3;
   start() {
     this.clonePosCardL = this.CardNodeL.position.clone();
     this.clonePosCardR = this.CardNodeR.position.clone();
@@ -321,6 +326,14 @@ export class GameController extends Component {
   }
 
   update(deltaTime: number) {
+    // this.BalancerLb.string = this.NetworkConnect.TotalBalanceUser;
+    // console.log(this.NetworkConnect.TotalBalanceUser);
+    // this.NetworkConnect.room.balance
+    this.BalancerLb.string = this.NetworkConnect.balanceUser;
+    this.TotalBetLB[0] = this.NetworkConnect.betTiger.toString();
+    this.TotalBetLB[1] = this.NetworkConnect.betDragon.toString();
+    this.TotalBetLB[2] = this.NetworkConnect.betTie.toString();
+
     if (
       this.NetworkConnect.room &&
       this.NetworkConnect.room.sessionId !== undefined
@@ -426,55 +439,67 @@ export class GameController extends Component {
 
   private betTigerBtn() {
     if (this.balanceUser >= this.chipNode.UserBet && this.GameEnd === false) {
-      this.addScore(
-        this.chipNode.UserBet,
-        this.betTigerLb,
-        this.UserBetTigerIcon
-      );
+      // this.addScore(
+      //   this.chipNode.UserBet,
+      //   this.betTigerLb,
+      //   this.UserBetTigerIcon
+      // );
       this.UserBetTigerIcon += this.chipNode.UserBet;
       this.ToatalUser[2].active = true;
-      this.NetworkConnect.room.send(
-        "Bet",
-        JSON.stringify({ betAmount: this.chipNode.UserBet, betType: "Tiger" })
-      );
+      if (this.chipNode.UserBet !== 0) {
+        this.NetworkConnect.room.send(
+          "Bet",
+          JSON.stringify({ betAmount: this.chipNode.UserBet, betType: "Tiger" })
+        );
+        this.createSpriteNode(-406, 200, this.ValueAnim);
+      }
+
       this.listCancelBet[1].node.active = true;
 
-      this.createSpriteNode(-406, 200, this.ValueAnim);
       this.AudioController.onAudio(8);
     }
   }
 
   private betDragonBtn() {
     if (this.balanceUser >= this.chipNode.UserBet && this.GameEnd === false) {
-      this.addScore(
-        this.chipNode.UserBet,
-        this.betDragonLb,
-        this.UserBetDragonIcon
-      );
+      // this.addScore(
+      //   this.chipNode.UserBet,
+      //   this.betDragonLb,
+      //   this.UserBetDragonIcon
+      // );
       this.UserBetDragonIcon += this.chipNode.UserBet;
       this.ToatalUser[0].active = true;
       this.listCancelBet[3].node.active = true;
-      this.NetworkConnect.room.send(
-        "Bet",
-        JSON.stringify({ betAmount: this.chipNode.UserBet, betType: "Dragon" })
-      );
+      if (this.chipNode.UserBet !== 0) {
+        this.NetworkConnect.room.send(
+          "Bet",
+          JSON.stringify({
+            betAmount: this.chipNode.UserBet,
+            betType: "Dragon",
+          })
+        );
+        this.createSpriteNode(-951, 193, this.ValueAnim1);
+      }
+
       this.PosBet();
-      this.createSpriteNode(-951, 193, this.ValueAnim1);
       this.AudioController.onAudio(8);
     }
   }
 
   private betTieBtn() {
     if (this.balanceUser >= this.chipNode.UserBet && this.GameEnd === false) {
-      this.addScore(this.chipNode.UserBet, this.betTieLb, this.UserBetTieIcon);
+      // this.addScore(this.chipNode.UserBet, this.betTieLb, this.UserBetTieIcon);
       this.listCancelBet[2].node.active = true;
-      this.NetworkConnect.room.send(
-        "Bet",
-        JSON.stringify({ betAmount: this.chipNode.UserBet, betType: "Tie" })
-      );
+      if (this.chipNode.UserBet !== 0) {
+        this.NetworkConnect.room.send(
+          "Bet",
+          JSON.stringify({ betAmount: this.chipNode.UserBet, betType: "Tie" })
+        );
+        this.createSpriteNode(-670, 221, this.ValueAnim2);
+      }
+
       this.UserBetTieIcon += this.chipNode.UserBet;
       this.ToatalUser[1].active = true;
-      this.createSpriteNode(-670, 221, this.ValueAnim2);
       this.AudioController.onAudio(8);
     }
   }
@@ -660,25 +685,29 @@ export class GameController extends Component {
     graphics.stroke();
   }
 
-  createSpriteNode(posX, PosY, PosNode: Node) {
-    // Tạo một Node mới
-    const spriteNode = new Node("SpriteNode");
-    spriteNode.scale = new Vec3(0.5, 0.5);
-
-    // Thêm một component Sprite vào Node
-    const spriteComponent = spriteNode.addComponent(Sprite);
-
-    // Gán SpriteFrame cho component Sprite
-    spriteComponent.spriteFrame =
-      this.chipNode.buttonPub.node.getComponent(Sprite).spriteFrame;
-    // spriteNode.position=new Vec3(this.chipNode.buttonPub.node.position)
-    // Thêm Node vào Scene hiện tại (ví dụ: Node cha của tất cả Sprite)
-    PosNode.addChild(spriteNode);
-    tween(spriteNode)
-      .to(0.3, { position: new Vec3(posX, PosY) })
-      .start();
+  createSpriteNode(posX, posY, posNode) {
+    // Kiểm tra xem chipNode và buttonPub đã được xác định chưa
+    if (this.chipNode && this.chipNode.buttonPub) {
+      const buttonNode = this.chipNode.buttonPub.node;
+      // Kiểm tra xem buttonNode và spriteFrame có tồn tại không
+      if (buttonNode && buttonNode.getComponent(Sprite)) {
+        const buttonSpriteFrame = buttonNode.getComponent(Sprite).spriteFrame;
+        const spriteNode = new Node("SpriteNode");
+        spriteNode.scale = new Vec3(0.5, 0.5);
+        const spriteComponent = spriteNode.addComponent(Sprite);
+        spriteComponent.spriteFrame = buttonSpriteFrame;
+        posNode.addChild(spriteNode);
+        // Bắt đầu tween animation sau khi spriteNode đã được thêm vào posNode
+        tween(spriteNode)
+          .to(0.3, { position: new Vec3(posX, posY) })
+          .start();
+      } else {
+        console.error("Button node or sprite frame is undefined");
+      }
+    } else {
+      return;
+    }
   }
-
   drawGrid(Grid: Node) {
     const numRows: number = this.numRows;
     const numCols: number = this.numCols;
